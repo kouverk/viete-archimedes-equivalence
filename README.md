@@ -25,15 +25,62 @@ Each denominator is built by nesting one more square root. The partial products 
 
 ## Why It Converges: The Taylor Series Argument
 
-### The Closed Form
+### From Nested Radicals to Closed Form
 
-The nth partial product has a beautiful closed form. By telescoping the identity `sin(x) = 2 sin(x/2) cos(x/2)` n times you get:
+The key is that each nested radical is a cosine in disguise. Define the sequence:
+
+```
+a₁ = √2,   a₂ = √(2+√2),   a₃ = √(2+√(2+√2)),  …
+```
+
+The half-angle formula for cosine says `2 cos(θ/2) = √(2 + 2 cos θ)`. Starting from `cos(π/4) = √2/2`, i.e. `2 cos(π/4) = √2 = a₁`, each step nests one more radical:
+
+```
+a₁ = 2 cos(π/4)
+a₂ = √(2 + a₁) = √(2 + 2 cos(π/4)) = 2 cos(π/8)
+a₃ = √(2 + a₂) = √(2 + 2 cos(π/8)) = 2 cos(π/16)
+ ⋮
+aₖ = 2 cos(π / 2ᵏ⁺¹)
+```
+
+So each factor in the product is:
+
+```
+2/aₖ = 2 / (2 cos(π / 2ᵏ⁺¹)) = 1 / cos(π / 2ᵏ⁺¹)
+```
+
+Now telescope. Repeatedly applying `sin(x) = 2 sin(x/2) cos(x/2)` starting from `sin(π/2) = 1`:
+
+```
+1 = 2 sin(π/4) cos(π/4)
+  = 4 sin(π/8) cos(π/8) cos(π/4)
+  = 8 sin(π/16) cos(π/16) cos(π/8) cos(π/4)
+  ⋮
+  = 2ⁿ sin(π/2ⁿ⁺¹) · cos(π/4) · cos(π/8) · ··· · cos(π/2ⁿ⁺¹)
+```
+
+So the nth partial product is:
+
+```
+Pₙ = 2 · (2/a₁) · (2/a₂) · ··· · (2/aₙ)
+   = 2 / (cos(π/4) · cos(π/8) · ··· · cos(π/2ⁿ⁺¹))
+   = 2 · 2ⁿ sin(π/2ⁿ⁺¹)
+   = 2ⁿ⁺¹ sin(π/2ⁿ⁺¹)
+```
+
+The entire infinite product of nested radicals collapses into a single trigonometric expression:
 
 ```
 Vₙ = 2ⁿ⁺¹ · sin(π / 2ⁿ⁺¹)
 ```
 
-This is not obvious from looking at the nested radicals, but it means the entire infinite product collapses into a single trigonometric expression.
+Therefore:
+
+```
+      2       2            2
+2 · ─── · ──────── · ──────────── · ··· (n terms)  =  2ⁿ⁺¹ · sin(π / 2ⁿ⁺¹)
+     √2   √(2+√2)   √(2+√(2+√2))
+```
 
 ### The Error Formula
 
