@@ -19,12 +19,6 @@ Each denominator is built by nesting one more square root. The partial products 
 - **Left** — the approximation value closing in on π, shown over the first 30 iterations where all the action happens
 - **Right** — correct decimal places per iteration, revealing the linear convergence rate and where it slams into the float64 ceiling at ~15.65 digits
 
-Run it with:
-
-```bash
-venv/bin/python approx.py
-```
-
 ![Viète formula convergence plots](pi_convergence.png)
 
 ---
