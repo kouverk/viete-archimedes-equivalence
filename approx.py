@@ -17,6 +17,10 @@ FLOAT64_DIGIT_LIMIT = math.log10(2**52)  # ≈ 15.65
 dem = math.sqrt(2)
 approx = 2 * (2 / dem)
 
+dem_str = "sqrt(2)"
+formula_str = "(2)*(2/(sqrt(2)))"
+print(f"start:     {formula_str}")
+
 iterations = []
 approximations = []
 correct_digits_list = []
@@ -24,15 +28,18 @@ correct_digits_list = []
 for i in range(100):
     dem = math.sqrt(2 + dem)
     approx *= 2 / dem
-
     error = abs(approx - PI)
     correct_digits = -math.log10(error) if error > 0 else FLOAT64_DIGIT_LIMIT
+
+    dem_str = "sqrt(2+" + dem_str + ")"
+    formula_str += "*(2/(" + dem_str + "))"
 
     iterations.append(i)
     approximations.append(approx)
     correct_digits_list.append(correct_digits)
 
-    print(f"iter {i:3d}:  {approx:.16f}   correct digits: {correct_digits:.2f}   abs error: {error:.2e}")
+    # print(f"iter {i:3d}:  {approx:.16f}   correct digits: {correct_digits:.2f}   abs error: {error:.2e}")
+    # print(f"         {formula_str}")
 
 # --- Plotting ---
 ZOOM = 30  # iterations where all the action happens
@@ -91,4 +98,5 @@ ax2.legend()
 plt.tight_layout()
 plt.savefig("pi_convergence.png", dpi=150, bbox_inches="tight", facecolor=BLACK)
 print("\nPlot saved to pi_convergence.png")
-plt.show()
+plt.show(block=False)
+plt.close()
